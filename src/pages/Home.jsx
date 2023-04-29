@@ -3,6 +3,7 @@ import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import Header from "../components/Header";
+import Dropzone from "react-dropzone";
 
 const Home = () => {
   const Search = styled("div")(({ theme }) => ({
@@ -48,23 +49,25 @@ const Home = () => {
   }));
   return (
     <>
-      <Header/>
-      <div style={{display: 'flex', justifyContent: 'center'}}>
-      <Search sx={{
+      <Header />
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Search
+          sx={{
             marginTop: 8,
             display: "flex",
             alignItems: "center",
-          }}>
-        <SearchIconWrapper>
-          <SearchIcon />
-        </SearchIconWrapper>
-        <StyledInputBase
-          sx={{borderRadius: 2}}
-          style={{border: '2px solid black'}}
-          placeholder="Search…"
-          inputProps={{ "aria-label": "search" }}
-        />
-      </Search>
+          }}
+        >
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            sx={{ borderRadius: 2 }}
+            style={{ border: "2px solid black" }}
+            placeholder="Search…"
+            inputProps={{ "aria-label": "search" }}
+          />
+        </Search>
       </div>
     </>
   );
