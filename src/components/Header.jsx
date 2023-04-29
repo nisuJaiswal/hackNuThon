@@ -27,7 +27,7 @@ const Header = () => {
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            <b>Symbiotic</b>
+            <b>AnswerAI</b>
           </Typography>
           <Button href="#" variant="contained" sx={{ my: 1, mx: 1.5 }}>
             Upload

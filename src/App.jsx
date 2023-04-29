@@ -15,8 +15,8 @@ function App() {
   return (
     <MuiThemeProvider theme={theme}>
       <div>
-        <Home/>
-        {/* <Analysis /> */}
+        {/* <Home/> */}
+        <Analysis />
       </div>
     </MuiThemeProvider>
   );
