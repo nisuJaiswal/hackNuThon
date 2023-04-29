@@ -2,7 +2,7 @@ import React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
-import Header from "../components/Header";
+import Header from "../components/Header.jsx";
 import Dropzone from "react-dropzone";
 
 const Home = () => {
@@ -70,6 +70,9 @@ const Home = () => {
             inputProps={{ "aria-label": "search" }}
           />
         </Search>
+      </div>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <img src="/image.svg" width={"500px"} height={"500px"} />
       </div>
     </>
   );
