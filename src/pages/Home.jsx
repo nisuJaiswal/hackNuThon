@@ -50,19 +50,21 @@ const Home = () => {
   return (
     <>
       <Header />
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <Search
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: "20px",
+        }}
+      >
+        <Search>
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
           <StyledInputBase
-            sx={{ borderRadius: 2 }}
+            sx={{ borderRadius: 2, paddingLeft: 0 }}
             style={{ border: "2px solid black" }}
             placeholder="Search…"
             inputProps={{ "aria-label": "search" }}

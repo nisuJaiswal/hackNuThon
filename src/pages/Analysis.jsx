@@ -12,7 +12,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
 // import IconButton from "@mui/joy/IconButton";
-import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+// import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
 import { green } from "@material-ui/core/colors";
 import { grey } from "@mui/material/colors";
 import "../styles/analysis.css";
