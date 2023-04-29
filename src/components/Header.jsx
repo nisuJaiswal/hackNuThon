@@ -7,6 +7,8 @@ import Typography from "@mui/material/Typography";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import { Box, Modal, Stack } from "@mui/material";
 import Dropzone, { useDropzone } from "react-dropzone";
+import CloseIcon from "@mui/icons-material/Close";
+import { grey } from "@mui/material/colors";
 
 const style = {
   position: "absolute",
@@ -88,8 +90,19 @@ const Header = () => {
               // sx={{ xs: {}, sm: {} }}
             >
               <Typography id="modal-modal-title" variant="h6" component="h2">
-                Drop file here
+                <Button
+                  color="primary"
+                  // sx={{ my: 1}}
+                  sx={{
+                    my: 1,
+                    p: 0.3,
+                  }}
+                  variant="outlined"
+                >
+                  <CloseIcon />
+                </Button>
               </Typography>
+
               <Typography
                 component={"div"}
                 id="modal-modal-description"
