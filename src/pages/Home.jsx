@@ -54,12 +54,11 @@ const Home = () => {
       <Box
         sx={{
           width: "100%",
-          minHeight: '90vh',
+          minHeight: "90vh",
           // height: "100%",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-
         }}
       >
         {/* <Search>
@@ -73,25 +72,43 @@ const Home = () => {
             inputProps={{ "aria-label": "search" }}
           />
         </Search> */}
-        <Box sx={{ width: '80%', display: "flex", flexDirection: { xs: 'column', lg: 'row' }, justifyContent: "center", alignItems: 'center' }}>
-          <Stack style={{
-            flex: '.5',
-
-          }} p={4} gap={3}>
-            <Typography variant="h2" >
-              <b>Upload Files &<br /> Ask Questions</b>
+        <Box
+          sx={{
+            width: "80%",
+            display: "flex",
+            flexDirection: { xs: "column", lg: "row" },
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Stack
+            style={{
+              flex: ".5",
+            }}
+            p={4}
+            gap={3}
+          >
+            <Typography variant="h2">
+              <b>
+                Upload Files &<br /> Ask Questions
+              </b>
             </Typography>
-            <Typography variant="h5"  >
-              Say goodbye to PDF overwhelm
-            </Typography>
+            <Typography variant="h5">Say goodbye to PDF overwhelm</Typography>
 
-            <Typography variant="caption"  >
-              With our app, you can upload any PDF and receive a concise summary of the content, as well as accurate answers to any questions you may have about the material.Try it out today and experience the benefits of efficient PDF reading!
+            <Typography variant="caption">
+              With our app, you can upload any PDF and receive a concise summary
+              of the content, as well as accurate answers to any questions you
+              may have about the material.Try it out today and experience the
+              benefits of efficient PDF reading!
             </Typography>
-
           </Stack>
           {/* <img style={{ flex: '.5' }} src="/image.svg" width={"400px"} height={"400px"} /> */}
-          <img style={{ flex: '.5', objectFit: 'cover' }} src="/3.jpg" width={"400px"} height={"400px"} />
+          <img
+            style={{ flex: ".5", objectFit: "cover" }}
+            src="/3.jpg"
+            width={"400px"}
+            height={"400px"}
+          />
         </Box>
       </Box>
     </>
