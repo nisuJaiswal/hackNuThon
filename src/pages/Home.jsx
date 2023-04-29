@@ -4,6 +4,7 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import Header from "../components/Header.jsx";
 import Dropzone from "react-dropzone";
+import { Box, Stack, Typography } from "@mui/material";
 
 const Home = () => {
   const Search = styled("div")(({ theme }) => ({
@@ -50,16 +51,18 @@ const Home = () => {
   return (
     <>
       <Header />
-      <div
-        style={{
+      <Box
+        sx={{
           width: "100%",
+          minHeight: '90vh',
+          // height: "100%",
           display: "flex",
-          alignItems: "center",
           justifyContent: "center",
-          marginTop: "20px",
+          alignItems: "center",
+
         }}
       >
-        <Search>
+        {/* <Search>
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
@@ -69,13 +72,36 @@ const Home = () => {
             placeholder="Search…"
             inputProps={{ "aria-label": "search" }}
           />
-        </Search>
-      </div>
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <img src="/image.svg" width={"500px"} height={"500px"} />
-      </div>
+        </Search> */}
+        <Box sx={{ width: '80%', display: "flex", flexDirection: { xs: 'column', lg: 'row' }, justifyContent: "center", alignItems: 'center' }}>
+          <Stack style={{
+            flex: '.5',
+
+          }} p={4} gap={3}>
+            <Typography variant="h4" >
+              <b>Upload Files and Ask Questions</b>
+            </Typography>
+            <Typography variant="subtitle1"  >
+              Say goodbye to the frustration of reading lengthy PDF with our web app. We understand the challenges of digesting complex information and have created an app that simplifies the process.
+            </Typography>
+
+            <Typography variant="subtitle2"  >
+              Whether you're a busy student or a professional seeking quick insights, our app is designed to help you save time without sacrificing knowledge.
+            </Typography>
+
+            <Typography variant="subtitle2"  >
+              Try it out today and experience the benefits of efficient PDF reading!
+            </Typography>
+
+          </Stack>
+          {/* <img style={{ flex: '.5' }} src="/image.svg" width={"400px"} height={"400px"} /> */}
+          <img style={{ flex: '.5', objectFit: 'cover' }} src="/3.jpg" width={"400px"} height={"400px"} />
+        </Box>
+      </Box>
     </>
   );
 };
 
 export default Home;
+
+// With our app, you can upload any PDF and receive a concise summary of the content, as well as accurate answers to any questions you may have about the material.

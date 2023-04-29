@@ -10,18 +10,18 @@ import Dropzone, { useDropzone } from "react-dropzone";
 import CloseIcon from "@mui/icons-material/Close";
 import { grey } from "@mui/material/colors";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  // width: 500,
-  // height: 300,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+// const style = {
+//   position: "absolute",
+//   top: "50%",
+//   left: "50%",
+//   transform: "translate(-50%, -50%)",
+//   // width: 500,
+//   // height: 300,
+//   bgcolor: "background.paper",
+//   border: "2px solid #000",
+//   boxShadow: 24,
+//   p: 4,
+// };
 
 const Header = () => {
   const onDrop = useCallback((acceptedFiles) => {
@@ -88,7 +88,7 @@ const Header = () => {
                 display: "flex",
                 flexDirection: "column",
               }}
-              // sx={{ xs: {}, sm: {} }}
+            // sx={{ xs: {}, sm: {} }}
             >
               <Typography id="modal-modal-title" variant="h6" component="h2">
                 <div
