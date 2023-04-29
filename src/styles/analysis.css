@@ -1,0 +1,17 @@
+/* .removePadding {
+  padding: 0px !important;
+ }
+
+ .MuiButton-outlined {
+  padding: 0px !important;
+ } */
+
+ /* .removeUpDownArrow{
+  
+ } */
+
+ input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
