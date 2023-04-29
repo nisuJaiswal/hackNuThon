@@ -61,7 +61,7 @@ const Header = () => {
           </Typography>
           <Button
             href="#"
-            variant="contained"
+            variant="outlined"
             sx={{ my: 1, mx: 1.5 }}
             onClick={handleOpen}
           >
@@ -85,18 +85,24 @@ const Header = () => {
                 boxShadow: 24,
                 height: { xs: "400px", lg: "300px" },
                 width: { xs: "300px", lg: "500px" },
+                display: "flex",
+                flexDirection: "column",
               }}
-            // sx={{ xs: {}, sm: {} }}
+              // sx={{ xs: {}, sm: {} }}
             >
               <Typography id="modal-modal-title" variant="h6" component="h2">
-                <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '0' }}>
-
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    margin: "0",
+                  }}
+                >
                   <Button
-                    color="primary"
-                    // sx={{ my: 1}}
                     sx={{
+                      color: "black",
                       my: 1,
-                      mr: .5,
+                      mr: 0.5,
                       p: 0.3,
                     }}
                     variant="text"
@@ -119,8 +125,10 @@ const Header = () => {
                       justifyContent={"center"}
                       alignItems={"center"}
                       style={{
-                        position: "absolute",
-                        inset: 60,
+                        // position: "absolute",
+                        margin: "0px 30px 10px 30px",
+                        padding: 16,
+                        // inset: 60,
                         borderRadius: 20,
                         heigth: "100%",
                         border: "2px dashed blue",
@@ -153,6 +161,16 @@ const Header = () => {
                 </Dropzone>
                 {/* <Button variant="contained">Upload</Button> */}
               </Typography>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button
+                  href="#"
+                  variant="contained"
+                  sx={{ my: 1, mx: 1.5, width: "30%" }}
+                  onClick={handleOpen}
+                >
+                  Upload
+                </Button>
+              </div>
             </Box>
           </Modal>
         </Toolbar>
