@@ -78,19 +78,15 @@ const Home = () => {
             flex: '.5',
 
           }} p={4} gap={3}>
-            <Typography variant="h4" >
-              <b>Upload Files and Ask Questions</b>
+            <Typography variant="h2" >
+              <b>Upload Files &<br /> Ask Questions</b>
             </Typography>
-            <Typography variant="subtitle1"  >
-              Say goodbye to the frustration of reading lengthy PDF with our web app. We understand the challenges of digesting complex information and have created an app that simplifies the process.
-            </Typography>
-
-            <Typography variant="subtitle2"  >
-              Whether you're a busy student or a professional seeking quick insights, our app is designed to help you save time without sacrificing knowledge.
+            <Typography variant="h5"  >
+              Say goodbye to PDF overwhelm
             </Typography>
 
-            <Typography variant="subtitle2"  >
-              Try it out today and experience the benefits of efficient PDF reading!
+            <Typography variant="caption"  >
+              With our app, you can upload any PDF and receive a concise summary of the content, as well as accurate answers to any questions you may have about the material.Try it out today and experience the benefits of efficient PDF reading!
             </Typography>
 
           </Stack>

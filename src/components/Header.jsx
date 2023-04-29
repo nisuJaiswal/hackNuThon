@@ -60,6 +60,7 @@ const Header = () => {
             <b>AnswerAI</b>
           </Typography>
           <Button
+            color="secondary"
             href="#"
             variant="outlined"
             sx={{ my: 1, mx: 1.5 }}
@@ -99,6 +100,7 @@ const Header = () => {
                   }}
                 >
                   <Button
+                    color="secondary"
                     sx={{
                       color: "black",
                       my: 1,
@@ -131,7 +133,7 @@ const Header = () => {
                         // inset: 60,
                         borderRadius: 20,
                         heigth: "100%",
-                        border: "2px dashed blue",
+                        border: "2px dashed purple",
                       }}
                     >
                       <input {...getInputProps()} />
@@ -148,7 +150,7 @@ const Header = () => {
                           <Typography
                             component={"span"}
                             variant="subtitle1"
-                            color="primary"
+                            color="secondary"
                             style={{ cursor: "pointer" }}
                           >
                             Click here{" "}
@@ -163,6 +165,7 @@ const Header = () => {
               </Typography>
               <div style={{ display: "flex", justifyContent: "center" }}>
                 <Button
+                  color="secondary"
                   href="#"
                   variant="contained"
                   sx={{ my: 1, mx: 1.5, width: "30%" }}
