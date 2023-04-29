@@ -83,24 +83,28 @@ const Header = () => {
                 bgcolor: "background.paper",
                 border: "2px solid #000",
                 boxShadow: 24,
-                p: 4,
                 height: { xs: "400px", lg: "300px" },
                 width: { xs: "300px", lg: "500px" },
               }}
-              // sx={{ xs: {}, sm: {} }}
+            // sx={{ xs: {}, sm: {} }}
             >
               <Typography id="modal-modal-title" variant="h6" component="h2">
-                <Button
-                  color="primary"
-                  // sx={{ my: 1}}
-                  sx={{
-                    my: 1,
-                    p: 0.3,
-                  }}
-                  variant="outlined"
-                >
-                  <CloseIcon />
-                </Button>
+                <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '0' }}>
+
+                  <Button
+                    color="primary"
+                    // sx={{ my: 1}}
+                    sx={{
+                      my: 1,
+                      mr: .5,
+                      p: 0.3,
+                    }}
+                    variant="text"
+                    onClick={handleClose}
+                  >
+                    <CloseIcon />
+                  </Button>
+                </div>
               </Typography>
 
               <Typography
