@@ -5,6 +5,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import Header from "../components/Header.jsx";
 import Dropzone from "react-dropzone";
 import { Box, Stack, Typography } from "@mui/material";
+import { TypeAnimation } from "react-type-animation";
 
 const Home = () => {
   const Search = styled("div")(({ theme }) => ({
@@ -88,18 +89,31 @@ const Home = () => {
             p={4}
             gap={3}
           >
-            <Typography variant="h2">
-              <b>
-                Upload Files &<br /> Ask Questions
-              </b>
+            <Typography variant="h3" style={{ color: "blueviolet" }}>
+              No more troubles of
             </Typography>
-            <Typography variant="h5">Say goodbye to PDF overwhelm</Typography>
+            <Typography variant="h2">
+              <TypeAnimation
+                sequence={[
+                  "NDA Contracts",
+                  1000,
+                  "Case Studies",
+                  1000,
+                  "Research Papers",
+                  500,
+                ]}
+                speed={50}
+                style={{ fontSize: 30, fontWeight: "semibold" }}
+                repeat={Infinity}
+              />
+            </Typography>
+            {/* <Typography variant="h5">Say goodbye to PDF overwhelm</Typography> */}
 
-            <Typography variant="caption">
-              With our app, you can upload any PDF and receive a concise summary
-              of the content, as well as accurate answers to any questions you
-              may have about the material.Try it out today and experience the
-              benefits of efficient PDF reading!
+            <Typography variant="caption" style={{ fontSize: 15 }}>
+              Tired of slogging through long NDAs and research papers? Our tool
+              saves you from that snooze-fest by helping you find answers
+              lightning fast. No more late-night cram sessions, just efficient
+              studying for even the laziest of students.
             </Typography>
           </Stack>
           {/* <img style={{ flex: '.5' }} src="/image.svg" width={"400px"} height={"400px"} /> */}
