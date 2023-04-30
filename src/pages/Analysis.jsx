@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import { styled } from "@mui/joy/styles";
 import Sheet from "@mui/joy/Sheet";
@@ -16,16 +16,18 @@ import ZoomOutIcon from "@mui/icons-material/ZoomOut";
 import { green } from "@material-ui/core/colors";
 import { grey } from "@mui/material/colors";
 import "../styles/analysis.css";
-import { OutlinedInput, TextField } from "@mui/material";
+import { Input, OutlinedInput, TextField } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import WebViewer from "@pdftron/webviewer";
 
 const Analysis = () => {
     const viewer = useRef(null);
+
     const { state: file } = useLocation()
-    // console.log(file);
-    const [question, setQuestion] = useState('')
+    const [chathistory, setChathistory] = useState([])
+
+
     const fileBlob = new Blob([file], { type: 'application/pdf' })
     const url = URL.createObjectURL(fileBlob)
     console.log(fileBlob)
@@ -44,21 +46,12 @@ const Analysis = () => {
         e.preventDefault()
         const data = await axios.get(`http://localhost:8000/query?query_string=${'Summarize this'}`)
         // console.log(data)
+        setResponse(data);
     }
-
+    const updateHistroy = (data) => {
+        setChathistory(data)
+    }
     useEffect(() => {
-        //     WebViewer(
-        //         {
-        //             path: 'lib',
-        //             // initialDoc: '/210120702006_Vatsal.pdf',
-        //         },
-        //         viewer.current,
-        //     ).then((instance) => {
-        //         const { documentViewer } = instance.Core;
-        //         documentViewer.getDocument(url);
-        //         // you can now call WebViewer APIs here...
-        //     });
-
 
 
         WebViewer(
@@ -75,11 +68,11 @@ const Analysis = () => {
 
                 const { documentViewer } = instance.Core;
                 documentViewer.addEventListener('documentLoaded', () => {
-                    // perform document operations
+                    // perform document operations  
                 });
             });
 
-    }, []);
+    }, [url, fileBlob, file.name]);
 
 
 
@@ -216,8 +209,26 @@ const Analysis = () => {
                                     padding: "0px",
                                 }}
                             >
-
-                            </div>
+                                {chathistory?.map((chat) => {
+                                    return (
+                                        <>
+                                            {chat.type == "backend" ?
+                                                <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: 10 }}>
+                                                    <div style={{ backgroundColor: '#80808096', maxWidth: '400px', padding: 14, borderRadius: 14, color: 'black' }}>
+                                                        {chat?.data?.response}
+                                                    </div>
+                                                </div>
+                                                :
+                                                <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
+                                                    <div style={{ backgroundColor: "#E6E6FA", maxWidth: '400px', padding: 14, borderRadius: 14, color: 'black' }}>
+                                                        {chat?.data}9c27b0d9
+                                                    </div>
+                                                </div>
+                                            }
+                                        </>
+                                    )
+                                })}
+                            </div >
                             <div
                                 style={{
                                     display: "flex",
@@ -287,28 +298,80 @@ const Analysis = () => {
                                     multiline
                                     maxRows={1}
                                 /> */}
-                                <form onSubmit={handleSubmit}>
-
-                                    <OutlinedInput
-                                        fullWidth
-                                        sx={{ mx: 1, my: 1 }}
-                                        placeholder="Ask anything about the document!"
-                                        id="component-outlined"
-                                        multiline
-                                        value={question}
-                                        onChange={e => setQuestion(e.target.value)}
-                                    />
-                                    <Button variant='contained' type='submit'>
-                                        Ask
-                                    </Button>
-                                </form>
+                                <AskQuestion chathistory={chathistory} updateHistroy={updateHistroy} />
                             </div>
                         </div>
                     </Item>
                 </Grid>
-            </Grid>
+            </Grid >
         </>
     );
 };
 
 export default Analysis;
+
+
+const AskQuestion = (props) => {
+    console.log("this are props", props)
+    const { chathistory, updateHistroy } = props;
+    console.log({ chathistory, updateHistroy })
+    const [question, setQuestion] = useState("")
+    console.log(chathistory)
+    const handleSubmit = async () => {
+        const data = await axios.get(`http://localhost:8000/query?query_string=${question}`)
+        console.log(data);
+        const chatHistoryData = chathistory.length > 0 ? [...chathistory] : [];
+
+        chatHistoryData.push(
+            {
+                data: question,
+                type: "user"
+            },
+            {
+                data: data?.data,
+                type: "backend"
+            }
+        );
+        console.log(chatHistoryData)
+        updateHistroy(chatHistoryData)
+    }
+    return (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+
+            <textarea
+                id="message"
+                name="message"
+                value={question}
+                cols={80}
+                onChange={event => {
+                    // 👇️ access textarea value
+                    setQuestion(event.target.value);
+                    // console.log(event.target.value);
+                }}
+            // style={{
+            //     border: isFocused ? 'none' : '1px solid #ccc',
+            //     outline: 'none',
+            //     boxShadow: isFocused ? '0 0 5px 0 blue' : 'none',
+            // }}
+            />
+            {/* <OutlinedInput
+                fullWidth
+                sx={{ mx: 1, my: 1 }}
+                placeholder="Ask anything about the document!"
+                id="component-outlined"
+                multiline
+                inputRef={inputRef}
+                value={question}
+                onChange={(e) => {
+                    console.log(e.target.innerText)
+                    setQuestion(...question, e.target.value)
+                }}
+            /> */}
+            <Button variant='contained' onClick={handleSubmit}>
+                Ask
+            </Button>
+
+        </div>
+    )
+}
+
