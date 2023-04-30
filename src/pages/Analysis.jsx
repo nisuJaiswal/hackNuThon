@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import Header from "../components/Header";
 import { styled } from "@mui/joy/styles";
 import Sheet from "@mui/joy/Sheet";
@@ -16,16 +16,21 @@ import ZoomOutIcon from "@mui/icons-material/ZoomOut";
 import { green } from "@material-ui/core/colors";
 import { grey } from "@mui/material/colors";
 import "../styles/analysis.css";
-import { OutlinedInput, TextField } from "@mui/material";
+import { Input, OutlinedInput, TextField } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import WebViewer from "@pdftron/webviewer";
 
 const Analysis = () => {
+    const viewer = useRef(null);
+
     const { state: file } = useLocation()
-    const [question, setQuestion] = useState('')
-    const fileBlob = new Blob([file], { type: 'appication/pdf' })
+    const [chathistory, setChathistory] = useState([])
+
+
+    const fileBlob = new Blob([file], { type: 'application/pdf' })
     const url = URL.createObjectURL(fileBlob)
-    console.log(url)
+    console.log(fileBlob)
 
     const Item = styled(Sheet)(({ theme }) => ({
         backgroundColor:
@@ -40,8 +45,37 @@ const Analysis = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const data = await axios.get(`http://localhost:8000/query?query_string=${'Summarize this'}`)
-        console.log(data)
+        // console.log(data)
+        setResponse(data);
     }
+    const updateHistroy = (data) => {
+        setChathistory(data)
+    }
+    useEffect(() => {
+
+
+        WebViewer(
+            {
+                path: '/lib',
+                initialDoc: url,
+            },
+            viewer.current,
+        )
+            .then(instance => {
+                // `myBlob` is your blob data which can come
+                // from sources such as a server or the filesystem
+                instance.UI.loadDocument(fileBlob, { filename: file.name });
+
+                const { documentViewer } = instance.Core;
+                documentViewer.addEventListener('documentLoaded', () => {
+                    // perform document operations  
+                });
+            });
+
+    }, [url, fileBlob, file.name]);
+
+
+
     return (
         <>
             <Header />
@@ -60,14 +94,14 @@ const Analysis = () => {
                     <Item>
                         <div style={{ display: "flex", alignItems: "center" }}>
                             <Typography variant="h6" ml={3} color="black">
-                                <b>We need a science project - The Atlantic</b>
+                                <b>{file.name}</b>
                             </Typography>
                             <Button style={{ marginLeft: "auto" }} variant="contained">
                                 View PDF
                             </Button>
                         </div>
                     </Item>
-                    <Item>
+                    {/* <Item>
                         <div style={{ display: "flex", alignItems: "center" }}>
                             <Button sx={{ my: 1, mx: 1.5 }} variant="text">
                                 Summary
@@ -142,7 +176,7 @@ const Analysis = () => {
                                 <ZoomOutIcon />
                             </Button>
                         </div>
-                    </Item>
+                    </Item> */}
                     <Item>
                         {/* <iframe
                             src={`${url}#toolbar=0`}
@@ -150,6 +184,7 @@ const Analysis = () => {
                             width="100%"
                             height="600px"
                         /> */}
+                        <div className="webviewer" ref={viewer} style={{ height: "100vh" }}></div>
                     </Item>
                 </Grid>
 
@@ -174,32 +209,26 @@ const Analysis = () => {
                                     padding: "0px",
                                 }}
                             >
-                                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                                Corrupti blanditiis unde porro velit quod minus, quaerat
-                                asperiores dolore, quae, reprehenderit voluptatem esse
-                                consequatur maiores dignissimos aspernatur nemo beatae iusto
-                                eaque vero ab nihil incidunt repellat. Consectetur ratione sit
-                                delectus corporis officia minima soluta amet, id maxime corrupti
-                                similique, molestias ipsum, accusantium tempore repellat
-                                sapiente quod omnis esse ipsam aliquid error eligendi! Sequi
-                                ducimus excepturi, doloribus aut quaerat id culpa, assumenda
-                                ullam velit necessitatibus esse eveniet aperiam nobis, fuga
-                                atque dolorem dicta dolores nihil ipsam obcaecati! Magnam sed
-                                porro aliquid nobis. Nobis, quaerat voluptatum. Ducimus
-                                perspiciatis et delectus? Nemo, magni cumque! Lorem ipsum dolor
-                                sit amet consectetur adipisicing elit. A voluptas reiciendis
-                                pariatur ipsa accusantium asperiores, odit fugiat repellat
-                                reprehenderit ut. Eligendi ullam ab labore maxime possimus
-                                incidunt amet vel laborum enim eos corrupti, fuga omnis nam
-                                ratione ea voluptas. Aspernatur iusto eum voluptatibus? Animi
-                                itaque culpa, nemo ut adipisci tenetur ullam pariatur ipsum quo
-                                asperiores qui, optio sunt, voluptatum harum. Nobis quia
-                                expedita aliquam incidunt perspiciatis iure, nesciunt iusto,
-                                ipsa inventore deleniti et exercitationem! Nesciunt, quia
-                                dignissimos esse id tenetur sequi, laudantium quaerat cupiditate
-                                obcaecati quae eligendi. Id officia ex veritatis eos eligendi
-                                tempora, fugit dolorum corporis. Voluptates, adipisci minus.
-                            </div>
+                                {chathistory?.map((chat) => {
+                                    return (
+                                        <>
+                                            {chat.type == "backend" ?
+                                                <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: 10 }}>
+                                                    <div style={{ backgroundColor: '#80808096', maxWidth: '400px', padding: 14, borderRadius: 14, color: 'black' }}>
+                                                        {chat?.data?.response}
+                                                    </div>
+                                                </div>
+                                                :
+                                                <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 10 }}>
+                                                    <div style={{ backgroundColor: "#E6E6FA", maxWidth: '400px', padding: 14, borderRadius: 14, color: 'black' }}>
+                                                        {chat?.data}9c27b0d9
+                                                    </div>
+                                                </div>
+                                            }
+                                        </>
+                                    )
+                                })}
+                            </div >
                             <div
                                 style={{
                                     display: "flex",
@@ -269,28 +298,80 @@ const Analysis = () => {
                                     multiline
                                     maxRows={1}
                                 /> */}
-                                <form onSubmit={handleSubmit}>
-
-                                    <OutlinedInput
-                                        fullWidth
-                                        sx={{ mx: 1, my: 1 }}
-                                        placeholder="Ask anything about the document!"
-                                        id="component-outlined"
-                                        multiline
-                                        value={question}
-                                        onChange={e => setQuestion(e.target.value)}
-                                    />
-                                    <Button variant='contained' type='submit'>
-                                        Ask
-                                    </Button>
-                                </form>
+                                <AskQuestion chathistory={chathistory} updateHistroy={updateHistroy} />
                             </div>
                         </div>
                     </Item>
                 </Grid>
-            </Grid>
+            </Grid >
         </>
     );
 };
 
 export default Analysis;
+
+
+const AskQuestion = (props) => {
+    console.log("this are props", props)
+    const { chathistory, updateHistroy } = props;
+    console.log({ chathistory, updateHistroy })
+    const [question, setQuestion] = useState("")
+    console.log(chathistory)
+    const handleSubmit = async () => {
+        const data = await axios.get(`http://localhost:8000/query?query_string=${question}`)
+        console.log(data);
+        const chatHistoryData = chathistory.length > 0 ? [...chathistory] : [];
+
+        chatHistoryData.push(
+            {
+                data: question,
+                type: "user"
+            },
+            {
+                data: data?.data,
+                type: "backend"
+            }
+        );
+        console.log(chatHistoryData)
+        updateHistroy(chatHistoryData)
+    }
+    return (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+
+            <textarea
+                id="message"
+                name="message"
+                value={question}
+                cols={80}
+                onChange={event => {
+                    // 👇️ access textarea value
+                    setQuestion(event.target.value);
+                    // console.log(event.target.value);
+                }}
+            // style={{
+            //     border: isFocused ? 'none' : '1px solid #ccc',
+            //     outline: 'none',
+            //     boxShadow: isFocused ? '0 0 5px 0 blue' : 'none',
+            // }}
+            />
+            {/* <OutlinedInput
+                fullWidth
+                sx={{ mx: 1, my: 1 }}
+                placeholder="Ask anything about the document!"
+                id="component-outlined"
+                multiline
+                inputRef={inputRef}
+                value={question}
+                onChange={(e) => {
+                    console.log(e.target.innerText)
+                    setQuestion(...question, e.target.value)
+                }}
+            /> */}
+            <Button variant='contained' onClick={handleSubmit}>
+                Ask
+            </Button>
+
+        </div>
+    )
+}
+
