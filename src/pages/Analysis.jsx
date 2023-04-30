@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../components/Header";
 import { styled } from "@mui/joy/styles";
 import Sheet from "@mui/joy/Sheet";
@@ -17,8 +17,16 @@ import { green } from "@material-ui/core/colors";
 import { grey } from "@mui/material/colors";
 import "../styles/analysis.css";
 import { OutlinedInput, TextField } from "@mui/material";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const Analysis = () => {
+    const { state: file } = useLocation()
+    const [question, setQuestion] = useState('')
+    const fileBlob = new Blob([file], { type: 'appication/pdf' })
+    const url = URL.createObjectURL(fileBlob)
+    console.log(url)
+
     const Item = styled(Sheet)(({ theme }) => ({
         backgroundColor:
             theme.palette.mode === "dark" ? theme.palette.background.level1 : "#fff",
@@ -29,6 +37,11 @@ const Analysis = () => {
         color: theme.vars.palette.text.secondary,
     }));
 
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const data = await axios.get(`http://localhost:8000/query?query_string=${'Summarize this'}`)
+        console.log(data)
+    }
     return (
         <>
             <Header />
@@ -131,11 +144,12 @@ const Analysis = () => {
                         </div>
                     </Item>
                     <Item>
-                        <embed
-                            src="210120702006_Vatsal.pdf#toolbar=0"
+                        {/* <iframe
+                            src={`${url}#toolbar=0`}
+                            // src="/210120702006_Vatsal.pdf"
                             width="100%"
                             height="600px"
-                        />
+                        /> */}
                     </Item>
                 </Grid>
 
@@ -255,13 +269,21 @@ const Analysis = () => {
                                     multiline
                                     maxRows={1}
                                 /> */}
-                                <OutlinedInput
-                                    fullWidth
-                                    sx={{ mx: 1, my: 1 }}
-                                    placeholder="Ask anything about the document!"
-                                    id="component-outlined"
-                                    multiline
-                                />
+                                <form onSubmit={handleSubmit}>
+
+                                    <OutlinedInput
+                                        fullWidth
+                                        sx={{ mx: 1, my: 1 }}
+                                        placeholder="Ask anything about the document!"
+                                        id="component-outlined"
+                                        multiline
+                                        value={question}
+                                        onChange={e => setQuestion(e.target.value)}
+                                    />
+                                    <Button variant='contained' type='submit'>
+                                        Ask
+                                    </Button>
+                                </form>
                             </div>
                         </div>
                     </Item>

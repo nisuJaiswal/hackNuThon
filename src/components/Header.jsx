@@ -33,7 +33,7 @@ const Header = () => {
     const timeoutPromise = new Promise((_, reject) => {
       timeoutId = setTimeout(() => {
         reject(new Error("Request timed out"));
-      }, 30000);
+      }, 60000);
     });
     return {
       promiseOrTimeout: Promise.race([promise, timeoutPromise]),
@@ -47,21 +47,21 @@ const Header = () => {
   //   body: JSON.stringify({ title: "React POST Request Example" }),
   // };
   const fetchData = async (url, fileData) => {
+    const config = { headers: { "Content-Type": "application/json" } };
     const { promiseOrTimeout, timeoutId } = promiseWithTimeout(
       axios.post(url, fileData)
     );
     try {
       setLoading(true);
-      const result = await promiseOrTimeout;
-      data = await result.json();
-      console.log(data.status);
+      const data = await promiseOrTimeout;
+      console.log(data.data);
 
-      if (data.status === "success") {
+      if (data.data.status === "success") {
         setLoading(false);
-        navigate("/analysis");
+        navigate("/analysis", { state: file });
       } else {
         setLoading(false);
-        toast.error("Something went wrong");
+        toast.error("ing went wrong");
 
         console.log("Error in data");
       }
@@ -69,6 +69,7 @@ const Header = () => {
       setLoading(false);
       setError(true);
       clearFileData();
+      console.log(error)
       toast.error("Something went wrong");
     } finally {
       clearTimeout(timeoutId);
@@ -164,7 +165,7 @@ const Header = () => {
                   display: "flex",
                   flexDirection: "column",
                 }}
-                // sx={{ xs: {}, sm: {} }}
+              // sx={{ xs: {}, sm: {} }}
               >
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                   <div
